@@ -12,5 +12,6 @@ namespace DAL
         void Inserir(Produto produto);
         void Deletar(string nome);
         public Produto Consultar(string nome);
+        public List<Produto> Listar();
     }
 }

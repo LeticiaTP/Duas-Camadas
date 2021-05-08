@@ -23,5 +23,10 @@ namespace DAL
         {
             throw new NotImplementedException();
         }
+
+        public List<Produto> Listar()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

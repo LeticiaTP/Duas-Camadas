@@ -2,6 +2,7 @@ using DAL;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Modelos;
 using System;
+using System.Collections.Generic;
 
 namespace TesteProduto
 {
@@ -52,6 +53,21 @@ namespace TesteProduto
 
             }
             Assert.IsNotNull(pro);
+        }
+
+        public void ListarProdutos()
+        {
+            List<Produto> produtos = null;
+            IRepositorio rep = new RepositorioMySQL();
+            try
+            {
+                produtos = rep.Listar();
+            }
+            catch (Exception ex)
+            {
+
+            }
+            Assert.IsNotNull(produtos);
         }
     }
 
