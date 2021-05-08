@@ -41,7 +41,6 @@ namespace DAL
                 conexao.Open();
                 MySqlCommand cmd = new MySqlCommand(cmdText: $"DELETE FROM produtos WHERE nome = @Nome", conexao);
                 cmd.Parameters.AddWithValue(parameterName: "@Nome", nome);
-
                 cmd.ExecuteNonQuery();
 
             }
@@ -66,9 +65,10 @@ namespace DAL
                 MySqlCommand cmd = new MySqlCommand(cmdText: $"SELECT * FROM Produtos WHERE nome like @Nome", conexao);
                 cmd.Parameters.AddWithValue(parameterName: "@Nome", nome);
                 dr = cmd.ExecuteReader();
-                pro = new Produto();
                 while (dr.Read())
                 {
+                    pro = new Produto();
+
                     pro.Id = dr.GetInt32(column: "Id");
                     pro.Nome = dr.GetString(column: "Nome");
                     pro.Marca = dr.GetString(column: "Marca");
