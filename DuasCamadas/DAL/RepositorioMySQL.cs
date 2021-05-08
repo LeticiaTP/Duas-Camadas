@@ -30,29 +30,15 @@ namespace DAL
                 conexao.Close();
             }
         }
-
         public void Inserir(Produto produto)
         {
-            MySqlConnection conexao = ObterConexao();
             try
             {
-                conexao.Open();
-                MySqlCommand cmd = new MySqlCommand(cmdText: $"INSERT INTO produtos (nome, marca, tipo, quantidade) values (@Nome,@Marca,@Tipo,@Quantidade)", conexao);
-                cmd.Parameters.AddWithValue(parameterName: "@Nome", produto.Nome);
-                cmd.Parameters.AddWithValue(parameterName: "@Marca", produto.Marca);
-                cmd.Parameters.AddWithValue(parameterName: "@Tipo", produto.Tipo);
-                cmd.Parameters.AddWithValue(parameterName: "@Quantidade", produto.Quantidade);
-
-                cmd.ExecuteNonQuery();
-
+                ExecuteNonQuery($"INSERT INTO produtos (nome, marca, tipo, quantidade) values (@Nome,@Marca,@Tipo,@Quantidade)", new MySqlParameter(parameterName: "@Nome", produto.Nome), new MySqlParameter(parameterName: "@Marca", produto.Marca), new MySqlParameter(parameterName: "@Tipo", produto.Tipo), new MySqlParameter(parameterName: "@Quantidade", produto.Quantidade));
             }
             catch (Exception ex)
             {
                 throw ex;
-            }
-            finally
-            {
-                conexao.Close();
             }
         }
 
