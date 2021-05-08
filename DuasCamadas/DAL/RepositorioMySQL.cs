@@ -44,23 +44,13 @@ namespace DAL
 
         public void Deletar(string nome)
         {
-            MySqlConnection conexao = ObterConexao();
             try
             {
-                conexao.Open();
-                MySqlCommand cmd = new MySqlCommand(cmdText: $"DELETE FROM produtos WHERE nome = @Nome", conexao);
-                cmd.Parameters.AddWithValue(parameterName: "@Nome", nome);
-
-                cmd.ExecuteNonQuery();
-
+                ExecuteNonQuery($"DELETE FROM produtos WHERE nome = @Nome", new MySqlParameter(parameterName: "@Nome", nome));
             }
             catch (Exception ex)
             {
                 throw ex;
-            }
-            finally
-            {
-
             }
         }
             public Produto Consultar(string nome)
