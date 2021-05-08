@@ -8,6 +8,29 @@ namespace DAL
     {
         private readonly string StringDeConexao = "server = localhost; user id = root; pwd = batata; database = duas-camadas";
 
+        private void ExecuteNonQuery(string sql, params MySqlParameter[] parameters)
+        {
+            MySqlConnection conexao = ObterConexao();
+            try
+            {
+                conexao.Open();
+                MySqlCommand cmd = new MySqlCommand(sql, conexao);
+                foreach(MySqlParameter parameter in parameters)
+                {
+                    cmd.Parameters.Add(parameter);
+                }
+                cmd.ExecuteNonQuery();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                conexao.Close();
+            }
+        }
+
         public void Inserir(Produto produto)
         {
             MySqlConnection conexao = ObterConexao();
