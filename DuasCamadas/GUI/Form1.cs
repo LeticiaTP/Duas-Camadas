@@ -48,7 +48,23 @@ namespace GUI
 
         private void Form1_Load(object sender, EventArgs e)
         {
+            ListarProdutos();
 
+        }
+
+        private void ListarProdutos()
+        {
+            IRepositorio rep = new RepositorioMySQL();
+            try
+            {
+                gridProdutos.DataSource = null;
+                gridProdutos.DataSource = rep.Listar();
+                gridProdutos.Refresh();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(text: $"Ocorreu um erro: {ex.Message}");
+            }
         }
 
         private void btnEnviar_Click(object sender, EventArgs e)
@@ -57,12 +73,18 @@ namespace GUI
             try
             {
                 rep.Inserir(produto: new Produto(txtNome.Text, txtMarca.Text, txtTipo.Text, int.Parse(txtQtd.Text)));
+                ListarProdutos();
                 MessageBox.Show(text: $"Produto {txtNome.Text} cadastrado com sucesso!");
             }
             catch (Exception ex)
             {
                 MessageBox.Show(text: $"Erro ao tentar cadastrar produto: {ex.Message}");
             }
+        }
+
+        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
         }
     }
 }

@@ -38,12 +38,15 @@ namespace GUI
             this.txtQtd = new System.Windows.Forms.TextBox();
             this.lblCate = new System.Windows.Forms.Label();
             this.btnEnviar = new System.Windows.Forms.Button();
+            this.label1 = new System.Windows.Forms.Label();
+            this.gridProdutos = new System.Windows.Forms.DataGridView();
+            ((System.ComponentModel.ISupportInitialize)(this.gridProdutos)).BeginInit();
             this.SuspendLayout();
             // 
             // lblNome
             // 
             this.lblNome.AutoSize = true;
-            this.lblNome.Location = new System.Drawing.Point(18, 59);
+            this.lblNome.Location = new System.Drawing.Point(362, 75);
             this.lblNome.Name = "lblNome";
             this.lblNome.Size = new System.Drawing.Size(43, 15);
             this.lblNome.TabIndex = 0;
@@ -51,7 +54,7 @@ namespace GUI
             // 
             // txtNome
             // 
-            this.txtNome.Location = new System.Drawing.Point(67, 56);
+            this.txtNome.Location = new System.Drawing.Point(411, 72);
             this.txtNome.Name = "txtNome";
             this.txtNome.Size = new System.Drawing.Size(298, 23);
             this.txtNome.TabIndex = 1;
@@ -59,7 +62,7 @@ namespace GUI
             // lblMarca
             // 
             this.lblMarca.AutoSize = true;
-            this.lblMarca.Location = new System.Drawing.Point(18, 137);
+            this.lblMarca.Location = new System.Drawing.Point(362, 153);
             this.lblMarca.Name = "lblMarca";
             this.lblMarca.Size = new System.Drawing.Size(43, 15);
             this.lblMarca.TabIndex = 2;
@@ -68,14 +71,14 @@ namespace GUI
             // 
             // txtTipo
             // 
-            this.txtTipo.Location = new System.Drawing.Point(85, 96);
+            this.txtTipo.Location = new System.Drawing.Point(411, 112);
             this.txtTipo.Name = "txtTipo";
-            this.txtTipo.Size = new System.Drawing.Size(280, 23);
+            this.txtTipo.Size = new System.Drawing.Size(298, 23);
             this.txtTipo.TabIndex = 3;
             // 
             // txtMarca
             // 
-            this.txtMarca.Location = new System.Drawing.Point(67, 134);
+            this.txtMarca.Location = new System.Drawing.Point(411, 150);
             this.txtMarca.Name = "txtMarca";
             this.txtMarca.Size = new System.Drawing.Size(117, 23);
             this.txtMarca.TabIndex = 4;
@@ -84,7 +87,7 @@ namespace GUI
             // lblQtd
             // 
             this.lblQtd.AutoSize = true;
-            this.lblQtd.Location = new System.Drawing.Point(205, 137);
+            this.lblQtd.Location = new System.Drawing.Point(549, 153);
             this.lblQtd.Name = "lblQtd";
             this.lblQtd.Size = new System.Drawing.Size(72, 15);
             this.lblQtd.TabIndex = 11;
@@ -92,7 +95,7 @@ namespace GUI
             // 
             // txtQtd
             // 
-            this.txtQtd.Location = new System.Drawing.Point(283, 134);
+            this.txtQtd.Location = new System.Drawing.Point(627, 150);
             this.txtQtd.Name = "txtQtd";
             this.txtQtd.Size = new System.Drawing.Size(82, 23);
             this.txtQtd.TabIndex = 7;
@@ -100,7 +103,7 @@ namespace GUI
             // lblCate
             // 
             this.lblCate.AutoSize = true;
-            this.lblCate.Location = new System.Drawing.Point(18, 99);
+            this.lblCate.Location = new System.Drawing.Point(362, 115);
             this.lblCate.Name = "lblCate";
             this.lblCate.Size = new System.Drawing.Size(33, 15);
             this.lblCate.TabIndex = 6;
@@ -109,7 +112,7 @@ namespace GUI
             // 
             // btnEnviar
             // 
-            this.btnEnviar.Location = new System.Drawing.Point(161, 188);
+            this.btnEnviar.Location = new System.Drawing.Point(517, 199);
             this.btnEnviar.Name = "btnEnviar";
             this.btnEnviar.Size = new System.Drawing.Size(75, 23);
             this.btnEnviar.TabIndex = 12;
@@ -117,11 +120,32 @@ namespace GUI
             this.btnEnviar.UseVisualStyleBackColor = true;
             this.btnEnviar.Click += new System.EventHandler(this.btnEnviar_Click);
             // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(500, 23);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(121, 15);
+            this.label1.TabIndex = 13;
+            this.label1.Text = "Cadastro de produtos";
+            // 
+            // gridProdutos
+            // 
+            this.gridProdutos.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.gridProdutos.Location = new System.Drawing.Point(23, 23);
+            this.gridProdutos.Name = "gridProdutos";
+            this.gridProdutos.RowTemplate.Height = 25;
+            this.gridProdutos.Size = new System.Drawing.Size(289, 191);
+            this.gridProdutos.TabIndex = 14;
+            this.gridProdutos.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(397, 226);
+            this.ClientSize = new System.Drawing.Size(741, 248);
+            this.Controls.Add(this.gridProdutos);
+            this.Controls.Add(this.label1);
             this.Controls.Add(this.btnEnviar);
             this.Controls.Add(this.lblQtd);
             this.Controls.Add(this.txtQtd);
@@ -134,6 +158,7 @@ namespace GUI
             this.Name = "Form1";
             this.Text = "Form1";
             this.Load += new System.EventHandler(this.Form1_Load);
+            ((System.ComponentModel.ISupportInitialize)(this.gridProdutos)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -150,6 +175,8 @@ namespace GUI
         private System.Windows.Forms.TextBox txtQtd;
         private System.Windows.Forms.Label lblCate;
         private System.Windows.Forms.Button btnEnviar;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.DataGridView gridProdutos;
     }
 }
 
