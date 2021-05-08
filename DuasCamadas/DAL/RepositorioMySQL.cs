@@ -6,9 +6,11 @@ namespace DAL
 {
     public class RepositorioMySQL
     {
+        private static readonly string StringDeConexao = "server = localhost; user id = root; pwd = batata; database = duas-camadas";
+
         public void Inserir(Produto produto)
         {
-            MySqlConnection conexao = new MySqlConnection(connectionString: "server = localhost; user id = root; pwd = batata; database = duas-camadas");
+            MySqlConnection conexao = ObterConexao();
             try
             {
                 conexao.Open();
@@ -31,23 +33,39 @@ namespace DAL
             }
         }
 
-        public void Deletar(string v)
+        public void Deletar(string nome)
         {
-            throw new NotImplementedException();
+            MySqlConnection conexao = ObterConexao();
+            try
+            {
+                conexao.Open();
+                MySqlCommand cmd = new MySqlCommand(cmdText: $"DELETE FROM produtos WHERE nome = @Nome", conexao);
+                cmd.Parameters.AddWithValue(parameterName: "@Nome", nome);
+
+                cmd.ExecuteNonQuery();
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                conexao.Close();
+            }
         }
 
-        public Produto Consultar(string marca)
+        public Produto Consultar(string nome)
         {
             Produto pro = null;
-            MySqlConnection conexao = new MySqlConnection(connectionString: "server = localhost; user id = root; pwd = batata; database = duas-camadas");
+            MySqlConnection conexao = ObterConexao();
             MySqlDataReader dr = null;
             try
             {
                 conexao.Open();
-                MySqlCommand cmd = new MySqlCommand(cmdText: $"SELECT * FROM Produtos WHERE marca='vitarella'", conexao);
-                cmd.Parameters.AddWithValue(parameterName: "@Marca", marca);
+                MySqlCommand cmd = new MySqlCommand(cmdText: $"SELECT * FROM Produtos WHERE nome like @Nome", conexao);
+                cmd.Parameters.AddWithValue(parameterName: "@Nome", nome);
                 dr = cmd.ExecuteReader();
-
                 pro = new Produto();
                 while (dr.Read())
                 {
@@ -58,22 +76,26 @@ namespace DAL
                     pro.Quantidade = dr.GetInt32(column: "Quantidade");
                     break;
                 }
-
             }
             catch (Exception ex)
             {
                 throw ex;
             }
             finally
-             {
+            {
                 conexao.Close();
                 if (dr != null)
                 {
                     dr.Close();
                 }
-                    
+
             }
             return pro;
+        }
+
+        private static MySqlConnection ObterConexao()
+        {
+            return new MySqlConnection(StringDeConexao);
         }
     }
 }
