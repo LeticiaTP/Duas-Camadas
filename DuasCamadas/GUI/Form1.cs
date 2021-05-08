@@ -53,7 +53,7 @@ namespace GUI
 
         private void btnEnviar_Click(object sender, EventArgs e)
         {
-            RepositorioMySQL rep = new RepositorioMySQL();          
+            IRepositorio rep = new RepositorioMySQL();          
             try
             {
                 rep.Inserir(produto: new Produto(txtNome.Text, txtMarca.Text, txtTipo.Text, int.Parse(txtQtd.Text)));

@@ -4,7 +4,7 @@ using System;
 
 namespace DAL
 {
-    public class RepositorioMySQL
+    public class RepositorioMySQL : IRepositorio
     {
         private readonly string StringDeConexao = "server = localhost; user id = root; pwd = batata; database = duas-camadas";
 
@@ -15,7 +15,7 @@ namespace DAL
             {
                 conexao.Open();
                 MySqlCommand cmd = new MySqlCommand(sql, conexao);
-                foreach(MySqlParameter parameter in parameters)
+                foreach (MySqlParameter parameter in parameters)
                 {
                     cmd.Parameters.Add(parameter);
                 }
@@ -53,48 +53,59 @@ namespace DAL
                 throw ex;
             }
         }
-            public Produto Consultar(string nome)
+        public Produto Consultar(string nome)
+        {
+            Produto pro = null;
+            MySqlConnection conexao = ObterConexao();
+            MySqlDataReader dr = null;
+            try
             {
-                Produto pro = null;
-                MySqlConnection conexao = ObterConexao();
-                MySqlDataReader dr = null;
-                try
+                dr = ExecuteReader(conexao, sql:"SELECT * FROM produtos WHERE nome like @Nome", parameters: new MySqlParameter(parameterName:"@Nome", nome));
+                while (dr.Read())
                 {
-                    conexao.Open();
-                    MySqlCommand cmd = new MySqlCommand(cmdText: $"SELECT * FROM produtos WHERE nome like @Nome", conexao);
-                    cmd.Parameters.AddWithValue(parameterName: "@Nome", nome);
-                    dr = cmd.ExecuteReader();
-                    while (dr.Read())
-                    {
-                        pro = new Produto();
+                    pro = new Produto();
 
-                        pro.Id = dr.GetInt32(column: "Id");
-                        pro.Nome = dr.GetString(column: "Nome");
-                        pro.Marca = dr.GetString(column: "Marca");
-                        pro.Tipo = dr.GetString(column: "Tipo");
-                        pro.Quantidade = dr.GetInt32(column: "Quantidade");
-                        break;
-                    }
+                    pro.Id = dr.GetInt32(column: "Id");
+                    pro.Nome = dr.GetString(column: "Nome");
+                    pro.Marca = dr.GetString(column: "Marca");
+                    pro.Tipo = dr.GetString(column: "Tipo");
+                    pro.Quantidade = dr.GetInt32(column: "Quantidade");
+                    break;
                 }
-                catch (Exception ex)
-                {
-                    throw ex;
-                }
-                finally
-                {
-                    conexao.Close();
-                    if (dr != null)
-                    {
-                        dr.Close();
-                    }
-
-                }
-                return pro;
             }
-
-            private MySqlConnection ObterConexao()
+            catch (Exception ex)
             {
-                return new MySqlConnection(StringDeConexao);
+                throw ex;
             }
+            finally
+            {
+                conexao.Close();
+                if (dr != null)
+                {
+                    dr.Close();
+                }
+
+            }
+            return pro;
+        }
+
+        private static MySqlDataReader ExecuteReader(MySqlConnection conexao, string sql, params MySqlParameter[] parameters)
+        {
+            MySqlDataReader dr;
+            conexao.Open();
+            MySqlCommand cmd = new MySqlCommand(sql, conexao);
+            foreach (MySqlParameter parameter in parameters)
+            {
+                cmd.Parameters.Add(parameter);
+            }
+            cmd.ExecuteNonQuery();
+            dr = cmd.ExecuteReader();
+            return dr;
+        }
+
+        private MySqlConnection ObterConexao()
+        {
+            return new MySqlConnection(StringDeConexao);
         }
     }
+}

@@ -11,7 +11,7 @@ namespace TesteProduto
         [TestMethod]
         public void InserirProduto()
         {
-            RepositorioMySQL rep = new RepositorioMySQL();
+            IRepositorio rep = new RepositorioMySQL();
             try
             { 
                 rep.Inserir(produto: new Produto(nome: "biscoito", marca: "futurinhos", tipo: "biscoitos e bolachas", quantidade:29));
@@ -26,7 +26,8 @@ namespace TesteProduto
 
         public void DeletarProduto()
         {
-            RepositorioMySQL rep = new RepositorioMySQL();
+            IRepositorio rep = new RepositorioMySQL();
+            rep = new RepositorioMySQL();
             try
             {
                 rep.Deletar(nome:"biscoito");
@@ -41,7 +42,7 @@ namespace TesteProduto
         public void ConsultarProduto()
         {
             Produto pro = null;
-            RepositorioMySQL rep = new RepositorioMySQL();
+            IRepositorio rep = new RepositorioMySQL();
             try
             {
                 pro = rep.Consultar(nome: "rivotril");
